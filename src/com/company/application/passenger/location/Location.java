@@ -1,17 +1,17 @@
 package com.company.application.passenger.location;
 
-/**
- * Location
- */
+import com.company.application.passenger.money.Money;
+
 public class Location implements LocationInterface{
 	private final String country;
 	private final String city;
 	private final String street;
 	private final Integer houseNumber;
+	// private final Money money;
 
 	public String getCountry() {
 		return this.country;
-	} // TODO: maybe i can remove this method
+	} // TODO: maybe I can remove this method?
 
 	public String getCity() {
 		return this.city;

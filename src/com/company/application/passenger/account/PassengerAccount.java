@@ -3,6 +3,7 @@ package com.company.application.passenger.account;
 import com.company.application.passenger.accountType.AccountTypeSwitcher;
 import com.company.application.passenger.accountType.AccountTypesList;
 import com.company.application.passenger.location.Location;
+import com.company.application.passenger.money.Money;
 import com.company.application.passenger.order.Order;
 import com.company.application.passenger.printProfile.PrintProfileData;
 import com.company.application.passenger.profile.Avatar;
@@ -11,22 +12,24 @@ import com.company.application.passenger.profile.Name;
 import com.company.application.passenger.profile.Profile;
 import com.company.application.passenger.menuInfo.InfoBlock;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class PassengerAccount implements PassengerAccountInterface {
 	private final ArrayList<Map<Integer, String>> orders = new ArrayList<>();
 	private final String name;
 	private final String lastname;
 	private final String sex;
-	private String tel;
+	private long tel;
 	private String avatarUrl = "https://cdn.app.compendium.com/uploads/user/e7c690e8-6ff9-102a-ac6d-e4aebca50425/9f78fc09-faec-4068-82bd-09e7cc8bbf34/File/e19ea0216ae8395bd4b3389970928be9/java_logo.png"; // TODO: change this line no-hardcode
 	private AccountTypesList accountType = AccountTypesList.BASIC;
 
 	// TODO: change PassengerAccount instance maker to builder patern
-	public PassengerAccount(String name, String lastname, String tel, String sex) {
+	public PassengerAccount(
+		String name,
+		String lastname,
+		long tel,
+		String sex
+	) {
 		this.name = name;
 		this.lastname = lastname;
 		this.tel = tel;
@@ -70,6 +73,10 @@ public class PassengerAccount implements PassengerAccountInterface {
 		return false;
 	}
 
+	/**
+	 *
+	 * @menu
+	 */
 	private boolean printProfileSubMenu() {
 		printProfile();
 
@@ -106,7 +113,7 @@ public class PassengerAccount implements PassengerAccountInterface {
 	private boolean printChangeNumberSubMenu() {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Type new number:");
-		this.tel = scanner.next();
+		this.tel = scanner.nextInt();
 
 		return menuHelper();
 	}
@@ -129,13 +136,20 @@ public class PassengerAccount implements PassengerAccountInterface {
 		String from = scanner.next();
 
 		System.out.println("|FROM| House number:");
-		int fromHouseNumber = scanner.nextInt();
+		int fromHouseNumber = makeHouseNumber();
 
 		System.out.println("|TO| Type street:");
 		String to = scanner.next();
 
 		System.out.println("|TO| House number:");
 		int toHouseNumber = scanner.nextInt();
+
+		System.out.println("Please pay for the trip:");
+		System.out.println("Dollars:");
+		int dollars = scanner.nextInt();
+
+		System.out.println("Cents:");
+		int cents = scanner.nextInt();
 
 		Location locationFrom = new Location
 			.Builder("Ukraine")
@@ -151,11 +165,11 @@ public class PassengerAccount implements PassengerAccountInterface {
 			.setHouseNumber(toHouseNumber)
 			.build();
 
-		Order order = new Order(locationFrom, locationTo);
+		Order order = new Order(locationFrom, locationTo, new Money(dollars, cents));
 		setOrder(locationFrom, locationTo);
 
-
-		System.out.println("Your currently order |FROM|: " + order.getFrom().getStreet() + " " + order.getFrom().getHouseNumber() + ", |TO|: " + order.getTo().getCity() + " " + order.getTo().getHouseNumber() + " accepted!");
+		System.out.println("Your currently order |FROM|: " + order.getFrom().getStreet() + " " + order.getFrom().getHouseNumber() + ", |TO|: " + order.getTo().getStreet() + " " + order.getTo().getHouseNumber() + " accepted!");
+		System.out.println("Money entered: $" + order.getDollars() + "." + order.getCents());
 		System.out.println("Please, wait for our call :)");
 	}
 
@@ -174,7 +188,6 @@ public class PassengerAccount implements PassengerAccountInterface {
 	 * @helpers
 	 */
 	public void printProfile() {
-
 		// TODO: rebuild to builder pattern
 		new PrintProfileData(
 			this.name,
@@ -184,6 +197,12 @@ public class PassengerAccount implements PassengerAccountInterface {
 			this.accountType,
 			this.avatarUrl
 		).printData();
+	}
+
+	private int makeHouseNumber() {
+		//TODO: add validation for Integers
+		Scanner scanner = new Scanner(System.in);
+		return scanner.nextInt();
 	}
 
 	public boolean menuHelper() {

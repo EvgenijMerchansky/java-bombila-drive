@@ -6,15 +6,15 @@ public class PrintProfileData {
 	private final String name;
 	private final AccountTypesList accountType;
 	private final String lastname;
-	private final String tel;
+	private final long tel;
 	private final String sex;
 	private final String avatarUrl;
 
-	// TODO: rebuild to builder pattern
+	// TODO: rebuild to builder pattern(HORROR)
 	public PrintProfileData(
 		String name,
 		String lastname,
-		String tel,
+		long tel,
 		String sex,
 		AccountTypesList accountType,
 		String avatarUrl

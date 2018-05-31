@@ -1,14 +1,20 @@
 package com.company.application.passenger.order;
 
 import com.company.application.passenger.location.Location;
+import com.company.application.passenger.money.Money;
 
 public class Order implements OrderInterface {
 	private Location from;
 	private Location to;
+	private int dollars;
+	private int cents;
 
-	public Order(Location from, Location to) {
+
+	public Order(Location from, Location to, Money money) {
 		this.from = from;
 		this.to = to;
+		this.dollars = money.getDollars();
+		this.cents = money.getCents();
 	}
 
 	public Location getFrom() {
@@ -17,6 +23,14 @@ public class Order implements OrderInterface {
 
 	public Location getTo() {
 		return to;
+	}
+
+	public int getDollars() {
+		return dollars;
+	}
+
+	public int getCents() {
+		return cents;
 	}
 
 	@Override

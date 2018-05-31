@@ -1,15 +1,15 @@
 package com.company.application.passenger.profile;
 
 public class Info {
-	private String tel;
+	private long tel;
 	private String sex;
 
-	public Info(String tel, String sex) {
+	public Info(long tel, String sex) {
 		this.tel = tel;
 		this.sex = sex;
 	}
 
-	public String getTel() {
+	public long getTel() {
 		return tel;
 	}
 

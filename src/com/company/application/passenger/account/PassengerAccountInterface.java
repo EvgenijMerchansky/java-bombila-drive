@@ -5,7 +5,7 @@ import java.util.Map;
 
 public interface PassengerAccountInterface {
 	void makeOrder();
-	ArrayList<Map<Integer, String>> getOrders();
 	void printProfile();
 	boolean menuHelper();
+	ArrayList<Map<Integer, String>> getOrders();
 }
